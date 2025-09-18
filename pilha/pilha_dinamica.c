@@ -110,7 +110,6 @@ void pop(elemento **topo){
 
     antigo = *topo;
 
-    int result;
     if(pilha_vazia(topo))
         printf("Pilha vazia!");
     else{
