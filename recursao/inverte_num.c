@@ -19,4 +19,10 @@ void inverte (int n){
     if ((n / 10) != 0){
         inverte(n / 10);    
     }
-}
+} 
+
+/*
+32 / 10 = 3 resta 2
+3 / 10 = 0 resta 3
+
+*/
