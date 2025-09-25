@@ -1,74 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct fila
-{
-    int inicio, termino, tamanho, elemento[10];
-};
+#define OK 1
+#define ERRO 0
+
+int exibe_menu();
+void mostra_fila(int vet[], int inicio, int f);
+int insere(int tam, int *fim, int *t_fila, int vet[]);
+int tira(int tam, int *inicio, int *t_fila, int vet[]);
 
 int main()
 {
+    int tam, final = -1, inicio = 0, tam_fila = 0, resp, ok;
 
-    int i;
-    struct fila F;
+    printf("Insira o tamanho da sua fila: ");
+    scanf("%d", &tam);
 
-    F.inicio = 0;
-    F.termino = -1;
-    F.tamanho = 0;
+    int vet[tam];
 
-    if (F.tamanho <= 10)
+    resp = exibe_menu();
+
+    while (resp != 3)
     {
-        for (i = 0; i < 10; i++)
+        switch (resp)
         {
-            printf("\nDigite o elemento a ser inserido na fila: ");
-            scanf("%d", &F.elemento[(F.termino % 10) + 1]);
-            F.termino = (F.termino % 10) + 1;
-            F.tamanho++;
+        case 1:
+            ok = insere(tam, &final, &tam_fila, vet);
+            if(ok == 1)
+                mostra_fila(vet, inicio, final);
+            break;
+        
+        case 2:
+            ok = tira(tam, &inicio, &tam_fila, vet);
+            if(ok == 1 && tam_fila != 0)
+                mostra_fila(vet, inicio, final);
+            break;
+
+        default:
+            printf("Opção inválida!\n");
+            break;
         }
+
+        resp = exibe_menu();
     }
-
-    else
-        printf("Fila cheia!");
-
-    printf("\n");
-    printf("Inicio da Fila esta na posicao: %d \n", F.inicio);
-    printf("Termino da Fila esta na posicao: %d \n", F.termino);
-    printf(" O tamanho da Fila é : %d \n", F.tamanho);
-    printf("\n");
-
-    /* remoção de 3 elementos da fila circular */
-    if (F.tamanho >= 3)
-    {
-        for (i = 0; i <= 2; i++)
-        {
-            printf("Elemento removido: %d \n", F.elemento[F.inicio]);
-            F.inicio = (F.inicio + 1) % 10;
-            F.tamanho = F.tamanho + 1;
-        }
-    }
-
-    else
-        printf("Remoção inválida.");
-    printf("\n");
-
-    /*inserção de 2 elementos da fila circular */
-    if (F.tamanho <= 8)
-    {
-        for (i = 0; i < 2; i++)
-        {
-            printf("Insira um valor na fila: ");
-            scanf("%d", &F.elemento[(F.termino % 10) + 1]);
-            F.termino = (F.termino) + 1;
-            F.tamanho = F.tamanho + 1;
-        }
-    }
-    else
-        printf("Fila cheia");
-
-    printf("\n");
-    printf("Inicio da Fila esta na posicao: %d \n", F.inicio);
-    printf("Termino da Fila esta na posicao: %d \n", F.termino);
-    printf(" O tamanho da Fila : %d \n", F.tamanho);
-
+    
+    printf("Até logo!\n");
     return 0;
+}
+
+int exibe_menu()
+{
+    int op;
+    printf("        O que deseja fazer?\n\n[1] - Adicionar item\n\n[2] - Remover item\n\n[3] - Encerrar programa\n\n");
+    scanf("%d", &op);
+
+    return op;
+}
+
+void mostra_fila(int vet[], int inicio, int f){
+    int i;
+    for (i = inicio; i <= f; i++)
+    {
+        printf("Elemento [%d] = %d\n", i, vet[i]);
+    }
+}
+
+int insere(int tam, int *fim, int *t_fila, int vet[]){
+    if (*t_fila == tam)
+    {
+        printf("Fila cheia!\n");
+        return ERRO;
+    }else{
+        printf("Digite um valor: ");
+        scanf("%d", &vet[(*fim + 1) % tam]);
+
+        (*t_fila)++;
+        *fim = (*fim + 1) % tam;
+        return OK;
+    }   
+}
+
+int tira(int tam, int *inicio, int *t_fila, int vet[]){
+    if (*t_fila == 0)
+    {
+        printf("Fila vazia!\n");
+        return ERRO;
+    }else{
+        printf("Elemento removido: %d\n", vet[*inicio]);
+
+        *inicio = (*inicio + 1) % tam;
+        (*t_fila)--;
+
+        return OK;
+    }    
 }
