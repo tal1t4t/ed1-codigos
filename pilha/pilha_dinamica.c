@@ -109,14 +109,11 @@ void pop(elemento **topo){
     elemento *antigo;
 
     antigo = *topo;
-    int result;
     
     if(pilha_vazia(topo))
         printf("Pilha vazia!");
     else{
-        result = (*topo)->numero;
         *topo = (*topo)->anterior;
-
         free(antigo);
     }
 }
