@@ -59,10 +59,12 @@ int exibe_menu()
 
 void mostra_fila(int vet[], int inicio, int f){
     int i;
+    printf("\n");
     for (i = inicio; i <= f; i++)
     {
         printf("Elemento [%d] = %d\n", i, vet[i]);
     }
+    printf("\n");
 }
 
 int insere(int tam, int *fim, int *t_fila, int vet[]){
